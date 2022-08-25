@@ -127,25 +127,14 @@ namespace GraphCSharp
 
         //позиция вершины в списке        
         protected override int GetVertexPos(ref T vertex)
-        {
-            int pos = 0;
-
-            foreach (T v in listNodes)
-            {
-                if (v.Equals(vertex))
-                    break;
-                pos++;
-            }
-
-            return pos;
+        {            
+            return FindVertex(ref vertex, ref listNodes);
         }
 
         // создает список вершин, смежных с vertex
         public override List<T> GetNeighbors(ref T vertex)
         {
-            List<T> result = new List<T>();
-            IEnumerator<T> viter = listNodes.GetEnumerator();
-
+            List<T> result = new List<T>();            
             int pos = GetVertexPos(ref vertex);
 
             if (pos == -1)
@@ -154,12 +143,10 @@ namespace GraphCSharp
                 return result;
             }
 
-            for (int i = 0; i <= numVertices; i++)
+            for (int i = 0; i < numVertices; ++i)
             {
                 if (edge[pos, i] > 0)
-                    result.Add(viter.Current);
-
-                viter.MoveNext();
+                    result.Add(listNodes[i]);                
             }
 
             return result;
@@ -282,14 +269,16 @@ namespace GraphCSharp
             T vert1 = default(T),
               vert2 = default(T);
 
-            int pos1, pos2, weight = 0;
+            int pos1, pos2, weight;
 
             for (int i = 0; i < numEdges; ++i)
             {
                 Console.WriteLine("Enter the first {0} edge(head, tail, weight):", i + 1);
 
-                vert1 = (T)(object)Convert.ToInt32(Console.ReadLine());
-                vert2 = (T)(object)Convert.ToInt32(Console.ReadLine());
+                int vertex = Convert.ToInt32(Console.ReadLine());
+                vert1 = (T)(object)vertex;
+                vertex = Convert.ToInt32(Console.ReadLine());
+                vert2 = (T)(object)vertex;
                 weight = Convert.ToInt32(Console.ReadLine());
                 
                 pos1 = GetVertexPos(ref vert1);
