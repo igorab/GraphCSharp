@@ -99,17 +99,34 @@ namespace GraphCSharp
         public override void DeleteVertex(ref T vertex)
         {
             int pos = GetVertexPos(ref vertex);
-            int row, col;
-
-            if (pos == 0)
+            
+            if (pos == -1)
             {
                 Console.WriteLine("Delete vertex: вершины нет в графе");
                 return;
             }
 
+            /*
+            //delete vertex
+            //listNodes.erase(remove(this->vecNodes.begin(), this->vecNodes.end(), vertex), this->vecNodes.end());
+
+            for (int i = 0; i < numVertices; ++i)
+            {
+                if (edge[pos, i] > 0)
+                    edge[pos, i] = 0;
+
+                if (edge[i, pos] > 0)
+                    edge[i, pos] = 0;
+            }
+
+            numVertices --;
+            numEdges --;
+            */
+
             listNodes.Remove(vertex);
             numVertices--;
 
+            int row, col;
             //матрица смежности делится на три области
             for (row = 0; row < pos; row++)
                 for (col = pos + 1; col < numVertices; col++)
@@ -146,7 +163,7 @@ namespace GraphCSharp
             for (int i = 0; i < numVertices; ++i)
             {
                 if (edge[pos, i] > 0)
-                    result.Add(listNodes[i]);                
+                    result.Add(listNodes[]);                
             }
 
             return result;
