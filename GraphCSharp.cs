@@ -163,7 +163,7 @@ namespace GraphCSharp
             for (int i = 0; i < numVertices; ++i)
             {
                 if (edge[pos, i] > 0)
-                    result.Add(listNodes[]);                
+                    result.Add(listNodes[i]);                
             }
 
             return result;
